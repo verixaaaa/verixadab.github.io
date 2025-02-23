@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerixaDAB</title>
+    <style>
+        /* Estilos globales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6e7bff, #4e54c8);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        nav {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: inline-block;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1em;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #f39c12;
+        }
+
+        .recommended-stations {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .station-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            width: 250px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .station-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .station-card h3 {
+            font-size: 1.5em;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .station-card p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .category-button {
+            background-color: #4e54c8;
+            padding: 12px 25px;
+            color: white;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .category-button:hover {
+            background-color: #f39c12;
+            border-color: #f39c12;
+        }
+
+        .emisoras-container {
+            display: none;
+            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+            color: #fff;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #f39c12;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .station-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .audio-player {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            margin-top: 20px;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>VerixaDAB</h1>
+        <p>Explora y disfruta las emisoras de DAB de todo el mundo.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">Sobre Nosotros</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>Emisoras Recomendadas</h2>
+        <div class="recommended-stations">
+            <div class="station-card" onclick="playStation('https://example.com/recommended1.mp3')">
+                <h3>Emisora 1</h3>
+                <p>Escucha las mejores canciones.</p>
+            </div>
+            <div class="station-card" onclick="playStation('https://example.com/recommended2.mp3')">
+                <h3>Emisora 2</h3>
+                <p>Disfruta de la radio de siempre.</p>
+            </div>
+            <div class="station-card" onclick="playStation('https://example.com/recommended3.mp3')">
+                <h3>Emisora 3</h3>
+                <p>Tu música favorita en un solo lugar.</p>
+            </div>
+        </div>
+        
+        <h2>Explora las Frecuencias DAB</h2>
+        <div class="category-list">
+            <button class="category-button" onclick="showEmisoras('dab5A')">5A</button>
+            <button class="category-button" onclick="showEmisoras('dab5B')">5B</button>
+            <button class="category-button" onclick="showEmisoras('dab5C')">5C</button>
+            <button class="category-button" onclick="showEmisoras('dab5D')">5D</button>
+            <button class="category-button" onclick="showEmisoras('dab6A')">6A</button>
+            <button class="category-button" onclick="showEmisoras('dab6B')">6B</button>
+            <button class="category-button" onclick="showEmisoras('dab6C')">6C</button>
+            <button class="category-button" onclick="showEmisoras('dab6D')">6D</button>
+            <button class="category-button" onclick="showEmisoras('dab7A')">7A</button>
+            <button class="category-button" onclick="showEmisoras('dab7B')">7B</button>
+            <button class="category-button" onclick="showEmisoras('dab7C')">7C</button>
+            <button class="category-button" onclick="showEmisoras('dab7D')">7D</button>
+            <button class="category-button" onclick="showEmisoras('dab8A')">8A</button>
+            <button class="category-button" onclick="showEmisoras('dab8B')">8B</button>
+            <button class="category-button" onclick="showEmisoras('dab8C')">8C</button>
+            <button class="category-button" onclick="showEmisoras('dab8D')">8D</button>
+            <button class="category-button" onclick="showEmisoras('dab9A')">9A</button>
+            <button class="category-button" onclick="showEmisoras('dab9B')">9B</button>
+            <button class="category-button" onclick="showEmisoras('dab9C')">9C</button>
+            <button class="category-button" onclick="showEmisoras('dab9D')">9D</button>
+            <button class="category-button" onclick="showEmisoras('dab10A')">10A</button>
+            <button class="category-button" onclick="showEmisoras('dab10B')">10B</button>
+            <button class="category-button" onclick="showEmisoras('dab10C')">10C</button>
+            <button class="category-button" onclick="showEmisoras('dab10D')">10D</button>
+            <button class="category-button" onclick="showEmisoras('dab11A')">11A</button>
+            <button class="category-button" onclick="showEmisoras('dab11B')">11B</button>
+            <button class="category-button" onclick="showEmisoras('dab11C')">11C</button>
+            <button class="category-button" onclick="showEmisoras('dab11D')">11D</button>
+            <button class="category-button" onclick="showEmisoras('dab12A')">12A</button>
+            <button class="category-button" onclick="showEmisoras('dab12B')">12B</button>
+            <button class="category-button" onclick="showEmisoras('dab12C')">12C</button>
+            <button class="category-button" onclick="showEmisoras('dab12D')">12D</button>
+            <button class="category-button" onclick="showEmisoras('dab13A')">13A</button>
+            <button class="category-button" onclick="showEmisoras('dab13B')">13B</button>
+            <button class="category-button" onclick="showEmisoras('dab13C')">13C</button>
+            <button class="category-button" onclick="showEmisoras('dab13D')">13D</button>
+            <button class="category-button" onclick="showEmisoras('dab13E')">13E</button>
+            <button class="category-button" onclick="showEmisoras('dab13F')">13F</button>
+        </div>
+
+        <div id="emisoras-container" class="emisoras-container">
+            <div class="station-list" id="emisoras-list">
+                <!-- Las emisoras aparecerán aquí -->
+            </div>
+        </div>
+
+        <div class="audio-player">
+            <audio id="audioPlayer" controls>
+                <source id="audioSource" src="" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 VerixaDAB | Desarrollado por <strong>VerixaStream</strong></p>
+    </footer>
+
+    <script>
+        const emisoras = {
+            dab5A: [
+                { name: 'Emisora 5A-1', url: 'https://example.com/5A1.mp3' },
+                { name: 'Emisora 5A-2', url: 'https://example.com/5A2.mp3' },
+            ],
+            dab5B: [
+                { name: 'Emisora 5B-1', url: 'https://example.com/5B1.mp3' },
+                { name: 'Emisora 5B-2', url: 'https://example.com/5B2.mp3' },
+            ],
+            // Agregar más frecuencias y emisoras según sea necesario
+        };
+
+        function showEmisoras(frequency) {
+            const emisorasList = emisoras[frequency];
+            const emisorasContainer = document.getElementById('emisoras-list');
+            emisorasContainer.innerHTML = ''; // Limpiar lista anterior
+
+            if (emisorasList) {
+                emisorasList.forEach(emisora => {
+                    const div = document.createElement('div');
+                    div.classList.add('station-card');
+                    div.innerHTML = `
+                        <h3>${emisora.name}</h3>
+                        <p>Escucha ahora</p>
+                    `;
+                    div.onclick = function() {
+                        playStation(emisora.url);
+                    };
+                    emisorasContainer.appendChild(div);
+                });
+                document.getElementById('emisoras-container').style.display = 'block';
+            } else {
+                emisorasContainer.innerHTML = '<p>No se encontraron emisoras para esta frecuencia.</p>';
+            }
+        }
+
+        function playStation(url) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const audioSource = document.getElementById('audioSource');
+            audioSource.src = url;
+            audioPlayer.load();
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>
